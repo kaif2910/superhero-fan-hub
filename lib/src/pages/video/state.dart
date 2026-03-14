@@ -1,14 +1,18 @@
 part of netflix;
 
 class VideoState extends State<Video> {
-  VideoPlayerController vcontroller;
-  bool controlVisible;
-  Timer timer;
+  late VideoPlayerController vcontroller;
+  late bool controlVisible;
+  Timer? timer;
 
   @override
   void initState() {
     controlVisible = true;
-    vcontroller = VideoPlayerController.asset('assets/video/promo.mp4');
+    if (widget.videoUrl.startsWith('http')) {
+      vcontroller = VideoPlayerController.network(widget.videoUrl);
+    } else {
+      vcontroller = VideoPlayerController.asset(widget.videoUrl.isNotEmpty ? widget.videoUrl : 'assets/video/promo.mp4');
+    }
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.transparent,
     ));
@@ -23,7 +27,7 @@ class VideoState extends State<Video> {
 
   @override
   void dispose() {
-    vcontroller?.dispose();
+    vcontroller.dispose();
     timer?.cancel();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,

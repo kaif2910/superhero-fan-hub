@@ -2,7 +2,8 @@ part of netflix;
 
 class Video extends StatefulWidget {
   final String title;
-  Video({Key key, this.title}) : super(key: key);
+  final String videoUrl;
+  Video({Key? key, required this.title, required this.videoUrl}) : super(key: key);
 
   @override
   VideoState createState() => VideoState();

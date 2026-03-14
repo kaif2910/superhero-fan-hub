@@ -5,9 +5,9 @@ class TvShow extends StatefulWidget {
   final Result item;
 
   TvShow({
-    Key key,
-    this.match,
-    this.item,
+    Key? key,
+    required this.match,
+    required this.item,
   }) : super(key: key);
 
   @override

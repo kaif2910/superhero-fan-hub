@@ -1,20 +1,20 @@
 part of netflix;
 
 class FilterState extends State<Filter> {
-  String filterSelected;
-  List<String> options = ['Series', 'Películas', 'Mi-lista'];
+  late String filterSelected;
+  List<String> options = ['Series', 'Movies', 'My List'];
   dynamic tvShow = {
     "details": {
       "genres": ["Drama", "Crime"],
       "year": "2011-09-20",
       "description":
-          "<p><b>Unforgettable</b> follows Carrie Wells, an enigmatic former police detective with a rare condition that makes her memory so flawless that every place, every conversation, every moment of joy and every heartbreak is forever embedded in her mind. It's not just that she doesn't forget anything - she can't; except for one thing: the details that would help solve her sister's long-ago murder. Carrie has tried to put her past behind her, but she's unexpectedly reunited with her ex-boyfriend and partner, NYPD Detective Al Burns when she consults on a homicide case.</p>"
+          "Unforgettable follows Carrie Wells, an enigmatic former police detective with a rare condition that makes her memory so flawless that every place, every conversation, every moment of joy and every heartbreak is forever embedded in her mind."
     },
     "_id": "5bedbf00a70245f2bbdd6a64",
     "id": 89,
     "name": "Unforgettable",
     "image":
-        "http://static.tvmaze.com/uploads/images/original_untouched/0/663.jpg"
+        "assets/images/2.jpg"
   };
   @override
   void initState() {
@@ -33,27 +33,24 @@ class FilterState extends State<Filter> {
           backgroundColor: Colors.black,
           leading: Image.asset('assets/images/netflix_icon.png'),
           // titleSpacing: 20.0,
-          title: Title(
-            color: Colors.black,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Hero(
-                  tag: widget.type,
-                  child: FlatButton(
-                    onPressed: () => print(widget.type),
-                    child: Text(
-                      widget.type.replaceAll('-', ' '),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                      ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Hero(
+                tag: widget.type,
+                child: TextButton(
+                  onPressed: () => print(widget.type),
+                  child: Text(
+                    widget.type.replaceAll('-', ' '),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14.0,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.pin,
@@ -61,10 +58,7 @@ class FilterState extends State<Filter> {
               child: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  Image.network(
-                    tvShow['image'],
-                    fit: BoxFit.cover,
-                  ),
+                  mediaImage(tvShow['image'], fit: BoxFit.cover),
                   DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -88,3 +82,6 @@ class FilterState extends State<Filter> {
     );
   }
 }
+
+
+

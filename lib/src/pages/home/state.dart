@@ -1,7 +1,7 @@
 part of netflix;
 
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  TabController controller;
+  late TabController controller;
 
   @override
   void initState() {
@@ -20,24 +20,25 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         indicatorWeight: 0.1,
         controller: controller,
         tabs: <Widget>[
-          Tab(text: 'Inicio', icon: Icon(Icons.home)),
-          Tab(text: 'Buscar', icon: Icon(Icons.search)),
-          Tab(text: 'Próximamente', icon: Icon(Icons.ondemand_video)),
-          Tab(text: 'Descargas', icon: Icon(Icons.file_download)),
-          Tab(text: 'Más', icon: Icon(Icons.menu)),
+          Tab(text: 'Home', icon: Icon(Icons.home)),
+          Tab(text: 'Search', icon: Icon(Icons.search)),
+          Tab(text: 'Coming Soon', icon: Icon(Icons.ondemand_video)),
+          Tab(text: 'Downloads', icon: Icon(Icons.file_download)),
+          Tab(text: 'More', icon: Icon(Icons.menu)),
         ],
       ),
       body: TabBarView(
         controller: controller,
         physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
-          Summary(),
-          Summary(),
-          Summary(),
-          Summary(),
-          Summary(),
+          Summary(title: 'Home'),
+          Summary(title: 'Search'),
+          Summary(title: 'Coming Soon'),
+          Summary(title: 'Downloads'),
+          Summary(title: 'More'),
         ],
       ),
     );
   }
 }
+

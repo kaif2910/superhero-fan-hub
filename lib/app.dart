@@ -9,6 +9,7 @@ import 'package:http/http.dart' show Client;
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Plugins import...
 import 'package:fluro/fluro.dart';
@@ -34,6 +35,7 @@ part 'src/resources/repository.dart';
 
 part 'src/utils/theme/color.dart';
 part 'src/utils/theme/typography.dart';
+part 'src/utils/local_store.dart';
 part 'src/pages/video/index.dart';
 part 'src/pages/video/state.dart';
 part 'src/pages/home/index.dart';
@@ -47,14 +49,15 @@ part 'src/pages/detail/state.dart';
 
 // Widgets
 part 'src/widgets/tvshow-list/index.dart';
+part 'src/widgets/media_image.dart';
 part 'src/widgets/player-life-cycle/index.dart';
 part 'src/widgets/player-life-cycle/state.dart';
 part 'src/widgets/player-controls/index.dart';
 part 'src/widgets/player-controls/state.dart';
 
 class Netflix extends StatelessWidget {
-  Netflix({Key key}) : super(key: key) {
-    final router = Router();
+  Netflix({Key? key}) : super(key: key) {
+    final router = FluroRouter();
     Routes.configureRoutes(router);
     Application.router = router;
   }
@@ -65,11 +68,13 @@ class Netflix extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Netflix',
       theme: ThemeData(
-        fontFamily: 'GoogleSans',
+        brightness: Brightness.dark,
         primaryColor: Colors.black,
+        scaffoldBackgroundColor: Colors.black,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       onGenerateRoute: Application.router.generator,
-      home: Home(),
+      home: Home(title: 'Home'),
     );
   }
 }

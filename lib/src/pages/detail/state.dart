@@ -2,9 +2,28 @@ part of netflix;
 
 class TvShowState extends State<TvShow> {
   var currentSeason = 1;
+  Set<int> _myListIds = {};
   @override
   void initState() {
     super.initState();
+    _loadLocalState();
+  }
+
+  Future<void> _loadLocalState() async {
+    final list = await LocalStore.getMyList();
+    if (!mounted) return;
+    setState(() => _myListIds = list);
+  }
+
+  Future<void> _toggleMyList(int id) async {
+    final next = Set<int>.from(_myListIds);
+    if (next.contains(id)) {
+      next.remove(id);
+    } else {
+      next.add(id);
+    }
+    setState(() => _myListIds = next);
+    await LocalStore.setMyList(next);
   }
 
   @override
@@ -30,18 +49,42 @@ class TvShowState extends State<TvShow> {
                     Container(
                       width: screenSize.width,
                       height: 220,
-                      child: Center(
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          mediaImage(
+                            widget.item.image,
+                            fit: BoxFit.fitWidth,
+                          ),
+                          Center(
                         child: Container(
                           height: 64.0,
                           width: 64.0,
-                          child: OutlineButton(
-                            padding: EdgeInsets.all(0.0),
-                            onPressed: () => print('play'),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(32.0),
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              padding: EdgeInsets.all(0.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(32.0),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              SystemChrome.setPreferredOrientations([
+                                DeviceOrientation.landscapeRight,
+                                DeviceOrientation.landscapeLeft,
+                              ]).then((e) {
+                                Application.router.navigateTo(
+                                  context,
+                                  Routes.video.replaceAll(':title', widget.item.name),
+                                  routeSettings: RouteSettings(arguments: {
+                                    'title': widget.item.name,
+                                    'videoUrl': widget.item.videoUrl
+                                  }),
+                                  transition: TransitionType.inFromBottom,
+                                );
+                              });
+                            },
                             child: Container(
                               height: 64.0,
                               width: 64.0,
@@ -57,14 +100,8 @@ class TvShowState extends State<TvShow> {
                             ),
                           ),
                         ),
-                      ),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            widget.item.image,
                           ),
-                          fit: BoxFit.fitWidth,
-                        ),
+                        ],
                       ),
                     ),
                     Container(
@@ -114,7 +151,7 @@ class TvShowState extends State<TvShow> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              '${widget.match}% de coicidencia',
+                              '${widget.match}% Match',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Color.fromRGBO(0, 255, 0, 0.8),
@@ -141,7 +178,7 @@ class TvShowState extends State<TvShow> {
                               ),
                             ),
                             Text(
-                              '${widget.item.seasons.length} temporadas',
+                              '${widget.item.seasons.length} seasons',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Color.fromRGBO(255, 255, 255, 0.3),
@@ -192,7 +229,7 @@ class TvShowState extends State<TvShow> {
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
-                                        text: 'Protagonizada por: ',
+                                        text: 'Starring: ',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -207,9 +244,9 @@ class TvShowState extends State<TvShow> {
                               padding: EdgeInsets.only(top: 8.0),
                               child: Row(
                                 children: <Widget>[
-                                  FlatButton(
-                                    textColor: Colors.white70,
-                                    onPressed: () => print('Mi Lista'),
+                                  TextButton(
+                                    style: TextButton.styleFrom(foregroundColor: Colors.white70),
+                                    onPressed: () => _toggleMyList(widget.item.id),
                                     child: Container(
                                       height: 50.0,
                                       child: Column(
@@ -217,20 +254,24 @@ class TvShowState extends State<TvShow> {
                                             MainAxisAlignment.spaceAround,
                                         children: <Widget>[
                                           Icon(
-                                            Icons.add,
+                                            _myListIds.contains(widget.item.id)
+                                                ? Icons.check
+                                                : Icons.add,
                                             size: 32.0,
                                           ),
                                           Text(
-                                            'Mi Lista',
+                                            _myListIds.contains(widget.item.id)
+                                                ? 'Added'
+                                                : 'My List',
                                             style: TextStyle(fontSize: 10.0),
                                           )
                                         ],
                                       ),
                                     ),
                                   ),
-                                  FlatButton(
-                                    textColor: Colors.white70,
-                                    onPressed: () => print('calificar'),
+                                  TextButton(
+                                    style: TextButton.styleFrom(foregroundColor: Colors.white70),
+                                    onPressed: () => print('Rate'),
                                     child: Container(
                                       height: 50.0,
                                       child: Column(
@@ -242,16 +283,16 @@ class TvShowState extends State<TvShow> {
                                             size: 24.0,
                                           ),
                                           Text(
-                                            'Calificar',
+                                            'Rate',
                                             style: TextStyle(fontSize: 10.0),
                                           )
                                         ],
                                       ),
                                     ),
                                   ),
-                                  FlatButton(
-                                    textColor: Colors.white70,
-                                    onPressed: () => print('Compartir'),
+                                  TextButton(
+                                    style: TextButton.styleFrom(foregroundColor: Colors.white70),
+                                    onPressed: () => print('Share'),
                                     child: Container(
                                       height: 50.0,
                                       child: Column(
@@ -263,7 +304,7 @@ class TvShowState extends State<TvShow> {
                                             size: 20.0,
                                           ),
                                           Text(
-                                            'Compartir',
+                                            'Share',
                                             style: TextStyle(fontSize: 10.0),
                                           )
                                         ],
@@ -277,7 +318,7 @@ class TvShowState extends State<TvShow> {
                               padding: EdgeInsets.only(top: 8.0),
                               child: Container(
                                 child: Text(
-                                  'EPISODIOS',
+                                  'EPISODES',
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 3,
                                   textAlign: TextAlign.left,
@@ -289,15 +330,15 @@ class TvShowState extends State<TvShow> {
                                 ),
                               ),
                             ),
-                            FlatButton(
-                              padding: EdgeInsets.all(0.0),
+                            TextButton(
+                              style: TextButton.styleFrom(padding: EdgeInsets.all(0.0)),
                               onPressed: widget.item.seasons.length > 1
-                                  ? () => print('cambiando temporada')
+                                  ? () => print('cambiando Season')
                                   : null,
                               child: Row(
                                 children: <Widget>[
                                   Text(
-                                    'Temporada $currentSeason',
+                                    'Season $currentSeason',
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 3,
                                     textAlign: TextAlign.left,
@@ -341,24 +382,46 @@ class TvShowState extends State<TvShow> {
                               margin: EdgeInsets.only(right: 8.0),
                               width: 150.0,
                               height: 90.0,
+                              clipBehavior: Clip.hardEdge,
                               decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      NetworkImage(seasonEpisodes[index].image),
-                                ),
+                                borderRadius: BorderRadius.circular(6.0),
                               ),
-                              child: Center(
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: <Widget>[
+                                  mediaImage(
+                                    seasonEpisodes[index].image,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Center(
                                 child: Container(
                                   height: 32.0,
                                   width: 32.0,
-                                  child: OutlineButton(
-                                    padding: EdgeInsets.all(0.0),
-                                    onPressed: () => print('play'),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(32.0),
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      padding: EdgeInsets.all(0.0),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(32.0),
+                                        ),
                                       ),
                                     ),
+                                    onPressed: () {
+                                      SystemChrome.setPreferredOrientations([
+                                        DeviceOrientation.landscapeRight,
+                                        DeviceOrientation.landscapeLeft,
+                                      ]).then((e) {
+                                        Application.router.navigateTo(
+                                          context,
+                                          Routes.video.replaceAll(':title', seasonEpisodes[index].name),
+                                          routeSettings: RouteSettings(arguments: {
+                                            'title': seasonEpisodes[index].name,
+                                            'videoUrl': widget.item.videoUrl
+                                          }),
+                                          transition: TransitionType.inFromBottom,
+                                        );
+                                      });
+                                    },
                                     child: Container(
                                       height: 32.0,
                                       width: 32.0,
@@ -375,6 +438,8 @@ class TvShowState extends State<TvShow> {
                                     ),
                                   ),
                                 ),
+                                  ),
+                                ],
                               ),
                             ),
                             Column(
@@ -424,3 +489,4 @@ class TvShowState extends State<TvShow> {
     );
   }
 }
+

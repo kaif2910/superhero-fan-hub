@@ -2,8 +2,8 @@ part of netflix;
 
 class PlayerControlState extends State<PlayerControl> {
   VideoPlayerController get controller => widget.controller;
-  String get title => widget.title ?? '';
-  bool get visible => widget.visible ?? false;
+  String get title => widget.title;
+  bool get visible => widget.visible;
 
   @override
   void initState() {
@@ -19,7 +19,7 @@ class PlayerControlState extends State<PlayerControl> {
   void init() {
     if (mounted)
       controller.addListener(() {
-        setState(() {});
+        if (mounted) setState(() {});
       });
   }
 
@@ -45,30 +45,18 @@ class PlayerControlState extends State<PlayerControl> {
 
   @override
   Widget build(BuildContext context) {
-    Duration duration = controller != null &&
-            controller.value != null &&
-            controller.value.duration != null
-        ? controller.value.duration
-        : null;
-    Duration position = controller != null && controller.value != null
-        ? controller.value.position
-        : null;
-    int timeDuration = duration != null && position != null
-        ? duration.inMilliseconds - position.inMilliseconds
-        : 0;
-    Duration timeline = duration != null && position != null
-        ? Duration(milliseconds: (timeDuration < 0 ? 0 : timeDuration))
-        : null;
-    String durationText =
-        timeline != null ? timeline.toString().split('.').first : '';
+    Duration duration = controller.value.duration;
+    Duration position = controller.value.position;
+    
+    int timeDuration = duration.inMilliseconds - position.inMilliseconds;
+    Duration timeline = Duration(milliseconds: (timeDuration < 0 ? 0 : timeDuration));
+    String durationText = timeline.toString().split('.').first;
+    
     final Size screenSize = MediaQuery.of(context).size;
-    double currentValue = position != null
-        ? controller.value.position.inMilliseconds?.toDouble() ?? 0.0
-        : 0.0;
+    double currentValue = position.inMilliseconds.toDouble();
     final double minValue = 0.0;
-    double maxValue = duration != null
-        ? controller.value.duration.inMilliseconds?.toDouble()
-        : 0.0;
+    double maxValue = duration.inMilliseconds.toDouble();
+    
     return AnimatedContainer(
       duration: Duration(milliseconds: 500),
       height: screenSize.height,
@@ -94,7 +82,7 @@ class PlayerControlState extends State<PlayerControl> {
                           padding: EdgeInsets.all(0.0),
                           color: Colors.white,
                           icon: Icon(Icons.arrow_back),
-                          onPressed: () => Application.router.pop(context),
+                          onPressed: () => Navigator.of(context).pop(),
                         ),
                         Container(
                           width: screenSize.width - 100.0,

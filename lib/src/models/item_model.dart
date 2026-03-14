@@ -1,16 +1,18 @@
 part of netflix;
 
 class ItemModel {
-  String _title;
+  late String _title;
   List<Result> _results = [];
 
   ItemModel.fromJson(Map<String, dynamic> parsedJson) {
-    _title = parsedJson['title'];
-    _results = List.from(parsedJson['items'])
-        .map(
-          (r) => Result.fromJson(r),
-        )
-        .toList();
+    _title = parsedJson['title'] ?? '';
+    _results = parsedJson['items'] != null
+        ? List.from(parsedJson['items'])
+            .map(
+              (r) => Result.fromJson(r),
+            )
+            .toList()
+        : [];
   }
 
   List<Result> get results => _results;

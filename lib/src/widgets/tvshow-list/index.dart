@@ -7,9 +7,9 @@ class ShowsList extends StatelessWidget {
   final Function onTap;
 
   ShowsList({
-    this.title,
-    this.items,
-    this.onTap,
+    required this.title,
+    required this.items,
+    required this.onTap,
   });
 
   List<Widget> renderItems() {
@@ -20,7 +20,10 @@ class ShowsList extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 2.5),
           width: 120.0,
           height: 140.0,
-          child: Image.network(item.image, fit: BoxFit.cover),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(6.0),
+            child: mediaImage(item.image, fit: BoxFit.cover),
+          ),
         ),
       );
     }).toList();
@@ -37,7 +40,11 @@ class ShowsList extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.start,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14.0,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           SingleChildScrollView(
             controller: controller,

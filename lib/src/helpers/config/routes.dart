@@ -1,17 +1,16 @@
 part of netflix;
 
 class Routes {
-  static String root = '/';
-  static String summary = '/summary';
-  static String detail = '/detail';
-  static String filter = '/filter';
-  static String video = '/trailer';
+  static String root = "/";
+  static String summary = "/summary";
+  static String detail = "/detail/:item";
+  static String filter = "/filter/:title/:type";
+  static String video = "/video/:title";
 
-  static void configureRoutes(Router router) {
+  static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(handlerFunc:
-        (BuildContext context, Map<String, List<String>> params,
-            [dynamic object]) {
-      print('ROUTE WAS NOT FOUND !!!');
+        (BuildContext? context, Map<String, List<String>> params) {
+      print("ROUTE WAS NOT FOUND !!!");
       return null;
     });
     router.define(root, handler: rootHandler);

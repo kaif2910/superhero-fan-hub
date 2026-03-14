@@ -5,7 +5,7 @@ class PlayerControl extends StatefulWidget {
   final String title;
   final bool visible;
 
-  PlayerControl(this.controller, {this.visible, this.title, Key key}) : super(key: key);
+  PlayerControl(this.controller, {required this.visible, required this.title, Key? key}) : super(key: key);
 
   @override
   PlayerControlState createState() => PlayerControlState();

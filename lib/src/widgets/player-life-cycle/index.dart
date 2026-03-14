@@ -7,7 +7,7 @@ class PlayerLifeCycle extends StatefulWidget {
   final VideoPlayerController controller;
   final VideoWidgetBuilder childBuilder;
 
-  PlayerLifeCycle(this.controller, this.childBuilder, {Key key})
+  PlayerLifeCycle(this.controller, this.childBuilder, {Key? key})
       : super(key: key);
 
   @override

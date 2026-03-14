@@ -1,5 +1,5 @@
 part of netflix;
 
 class Application {
-  static Router router;
+  static late FluroRouter router;
 }

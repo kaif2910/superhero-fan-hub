@@ -4,9 +4,9 @@ class Filter extends StatefulWidget {
   final String title;
   final String type;
   Filter({
-    Key key,
-    this.title,
-    this.type,
+    Key? key,
+    required this.title,
+    required this.type,
   }) : super(key: key);
 
   @override

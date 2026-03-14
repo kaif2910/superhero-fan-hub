@@ -1,26 +1,37 @@
 part of netflix;
 
 class Episode {
-  int _number;
-  int _season;
-  String _image;
-  String _summary;
-  String _name;
-  int _duration;
+  late int _number;
+  late int _season;
+  late String _image;
+  late String _summary;
+  late String _name;
+  late int _duration;
 
   Episode.fromJson(Map<String, dynamic> parsedJson) {
     RegExp exp = new RegExp(r"<[^>]*>");
-    _number = parsedJson['number'];
-    _season = parsedJson['season'];
-    _image = (parsedJson['image'] ?? {})['medium'];
+    _number = parsedJson['number'] ?? 0;
+    _season = parsedJson['season'] ?? 0;
+    
+    if (parsedJson['image'] is String) {
+      _image = parsedJson['image'];
+    } else {
+      _image = (parsedJson['image'] ?? {})['medium'] ?? '';
+    }
+    
     _summary = parsedJson['summary'] != null
         ? parsedJson['summary'].replaceAll(exp, '')
         : '';
-    _name = parsedJson['name'];
-    _duration = parsedJson['airtime'] != null &&
-            parsedJson['airtime'].toString().isNotEmpty
-        ? int.parse(parsedJson['airtime'].split(':')[0])
-        : 0;
+    _name = parsedJson['name'] ?? '';
+    
+    if (parsedJson['runtime'] != null) {
+      _duration = int.parse(parsedJson['runtime'].toString());
+    } else if (parsedJson['airtime'] != null &&
+            parsedJson['airtime'].toString().isNotEmpty) {
+      _duration = int.parse(parsedJson['airtime'].split(':')[0]);
+    } else {
+      _duration = 0;
+    }
   }
 
   int get number => _number;
