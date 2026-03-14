@@ -56,17 +56,21 @@ class MovieApiProvider {
 
   List<Map<String, dynamic>> _mockHomeData() {
     Map<String, dynamic> buildMarvelShow(int id, String name, String poster, String videoUrl, String description) {
-      final clone = Map<String, dynamic>.from(tvShow);
+      // Create a DEEP COPY of the template to avoid data bleeding between movies
+      final clone = json.decode(json.encode(tvShow)); 
+      
       clone['id'] = id;
       clone['name'] = name;
       clone['image'] = poster;
       clone['backdrop'] = poster;
       clone['videoUrl'] = videoUrl;
       clone['year'] = '2022-01-01';
+      
+      // Ensure details is treated as its own unique object
       clone['details']['description'] = description;
       clone['details']['genres'] = ['Action', 'Sci-Fi', 'Marvel'];
       
-      // Fix the "The Snap" issue: Update episode info to match movie
+      // Update episode info specifically for this movie
       clone['details']['episodes'] = [
         {
           "id": id,
@@ -124,8 +128,8 @@ class MovieApiProvider {
 
     return [
       {'title': 'Marvel Cinematic Universe', 'items': marvelItems},
-      {'title': 'Trending Now', 'items': marvelItems.reversed.toList()},
-      {'title': 'Action & Adventure', 'items': marvelItems.skip(1).toList()},
+      {'title': 'Trending Now', 'items': List.from(marvelItems.reversed)},
+      {'title': 'Action & Adventure', 'items': List.from(marvelItems.skip(1))},
     ];
   }
 }

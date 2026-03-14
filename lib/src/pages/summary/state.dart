@@ -451,7 +451,9 @@ class SummaryState extends State<Summary> {
           final allResults = _flattenResults(data);
           
           // Use the first item from the first section as our Hero, or fallback to constants
-          final Result heroShow = allResults.isNotEmpty ? allResults.first : Result.fromJson(tvShow);
+          final Result heroShow = allResults.isNotEmpty 
+              ? allResults.first 
+              : Result.fromJson(json.decode(json.encode(tvShow))); 
           
           final List<Widget> sections = <Widget>[];
           if (widget.title != 'Search') {
