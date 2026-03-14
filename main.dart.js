@@ -81602,7 +81602,7 @@ this.aA()},
 H(a){var s,r=this.d
 r===$&&A.a()
 s=r.a
-if(!s.ax)return A.n2("assets/images/1.jpg",B.bn,null,null)
+if(!s.ax)return A.n2("assets/images/end_game.jpg",B.bn,null,null)
 s=s.as
 return A.aqQ(A.db(new A.pe(r,null),s.b,s.a),B.bn)}}
 A.af5.prototype={
