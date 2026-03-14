@@ -56,6 +56,19 @@ class MovieApiProvider {
       clone['year'] = '2022-01-01';
       clone['details']['description'] = description;
       clone['details']['genres'] = ['Action', 'Sci-Fi', 'Marvel'];
+      
+      // Fix the "The Snap" issue: Update episode info to match movie
+      clone['details']['episodes'] = [
+        {
+          "id": id,
+          "name": name,
+          "season": 1,
+          "number": 1,
+          "runtime": 150,
+          "image": poster,
+          "summary": description
+        }
+      ];
       return clone;
     }
 
@@ -103,7 +116,7 @@ class MovieApiProvider {
     return [
       {'title': 'Marvel Cinematic Universe', 'items': marvelItems},
       {'title': 'Trending Now', 'items': marvelItems.reversed.toList()},
-      {'title': 'Top Picks For You', 'items': marvelItems.skip(1).toList()},
+      {'title': 'Action & Adventure', 'items': marvelItems.skip(1).toList()},
     ];
   }
 }

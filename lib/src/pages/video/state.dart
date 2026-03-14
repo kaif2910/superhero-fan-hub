@@ -13,6 +13,7 @@ class VideoState extends State<Video> {
     vcontroller = VideoPlayerController.asset('assets/video/promo.mp4')
       ..initialize().then((_) {
         if (!mounted) return;
+        vcontroller.setVolume(0.0); // Mute for intro autoplay
         setState(() {});
         vcontroller.play();
       });

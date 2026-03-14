@@ -15,6 +15,7 @@ class SplashState extends State<Home> {
     _controller = VideoPlayerController.asset('assets/video/promo.mp4')
       ..initialize().then((_) {
         if (!mounted) return;
+        _controller.setVolume(0.0); // Mute for autoplay
         setState(() {
           _initialized = true;
         });
