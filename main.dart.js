@@ -81003,7 +81003,7 @@ A.WY.prototype={}
 A.Xh.prototype={}
 A.IG.prototype={
 H(a){var s=A.A4(B.ag,B.m,B.m,null,A.ato(A.b1()))
-return new A.xc(new A.lq("Home",null),$.pT.k7().gVb(),"Netflix",s,!1,null)}}
+return new A.xc(new A.lq("Home",null),$.pT.k7().gVb(),"Marvel Cinema",s,!1,null)}}
 A.a3P.prototype={
 yp(){var s=0,r=A.N(t.z),q=this,p
 var $async$yp=A.O(function(a,b){if(a===1)return A.K(b,r)
