@@ -153,11 +153,11 @@ class SummaryState extends State<Summary> {
                 Container(
                   padding: EdgeInsets.all(4.0),
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(185, 3, 12, 1.0),
+                    color: Color(0xFFED1D24), // Marvel Red
                     borderRadius: BorderRadius.circular(4.0),
                   ),
                   child: Text(
-                    'TOP 10',
+                    'HOT 10', // Changed from TOP 10
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 11.0,

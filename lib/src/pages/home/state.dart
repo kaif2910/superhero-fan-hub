@@ -1,71 +1,33 @@
 part of marvel_cinema;
 
 class SplashState extends State<Home> {
-  late VideoPlayerController _controller;
-  bool _initialized = false;
-  Timer? _fallbackTimer;
-
   @override
   void initState() {
     super.initState();
-    
-    // Fallback timer: Go to Home after 6 seconds no matter what
-    _fallbackTimer = Timer(Duration(seconds: 6), _goToHome);
-
-    _controller = VideoPlayerController.asset('assets/video/app_intro.mp4')
-      ..initialize().then((_) {
-        if (!mounted) return;
-        _controller.setVolume(0.0); // Mute for autoplay
-        setState(() {
-          _initialized = true;
-        });
-        _controller.play();
-      }).catchError((error) {
-        print("Video play error: $error");
-        _goToHome();
-      });
-
-    _controller.addListener(() {
-      if (_controller.value.position >= _controller.value.duration && _controller.value.duration != Duration.zero) {
-        _goToHome();
-      }
+    // Simply wait for 2 seconds and go to home
+    Timer(Duration(seconds: 2), () {
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => MainHome(title: widget.title)),
+      );
     });
-  }
-
-  void _goToHome() {
-    if (!mounted) return;
-    _fallbackTimer?.cancel();
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => MainHome(title: widget.title)),
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    _fallbackTimer?.cancel();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SizedBox.expand(
-        child: _initialized
-            ? FittedBox(
-                fit: BoxFit.fill,
-                child: SizedBox(
-                  width: _controller.value.size.width,
-                  height: _controller.value.size.height,
-                  child: VideoPlayer(_controller),
-                ),
-              )
-            : Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-                ),
-              ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/app_logo.png', width: 200),
+            SizedBox(height: 20),
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
+            ),
+          ],
+        ),
       ),
     );
   }
