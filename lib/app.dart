@@ -1,4 +1,4 @@
-library netflix;
+library marvel_cinema;
 
 // Dart Imports
 import 'dart:async';
@@ -55,8 +55,8 @@ part 'src/widgets/player-life-cycle/state.dart';
 part 'src/widgets/player-controls/index.dart';
 part 'src/widgets/player-controls/state.dart';
 
-class Netflix extends StatelessWidget {
-  Netflix({Key? key}) : super(key: key) {
+class MarvelCinema extends StatelessWidget {
+  MarvelCinema({Key? key}) : super(key: key) {
     final router = FluroRouter();
     Routes.configureRoutes(router);
     Application.router = router;

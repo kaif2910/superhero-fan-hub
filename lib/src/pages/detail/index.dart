@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class TvShow extends StatefulWidget {
   final int match;

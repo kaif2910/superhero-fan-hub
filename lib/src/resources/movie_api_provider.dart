@@ -1,8 +1,8 @@
-part of netflix;
+part of marvel_cinema;
 
 class MovieApiProvider {
   final String host =
-      const String.fromEnvironment('NETFLIX_API_HOST', defaultValue: '');
+      const String.fromEnvironment('MARVEL_CINEMA_API_HOST', defaultValue: '');
   Client client = Client();
 
   bool get _useMock => host.isEmpty || host.contains('your-host');

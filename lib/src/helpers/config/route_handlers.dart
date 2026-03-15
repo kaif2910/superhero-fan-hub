@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 var rootHandler = Handler(
   handlerFunc: (BuildContext? context, Map<String, List<String>> params) {

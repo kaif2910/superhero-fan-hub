@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class SummaryState extends State<Summary> {
   final TextEditingController _searchController = TextEditingController();

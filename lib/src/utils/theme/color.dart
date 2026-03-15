@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class Palette {
   static const Color dune = Color.fromRGBO(40, 38, 35, 1.0);

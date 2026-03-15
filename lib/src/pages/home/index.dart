@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class Home extends StatefulWidget {
   Home({Key? key, required this.title}) : super(key: key);

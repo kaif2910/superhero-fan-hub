@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class ItemModel {
   late String _title;

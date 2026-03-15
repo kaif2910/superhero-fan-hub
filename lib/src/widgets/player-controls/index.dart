@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class PlayerControl extends StatefulWidget {
   final VideoPlayerController controller;

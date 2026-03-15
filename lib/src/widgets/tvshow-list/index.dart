@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class ShowsList extends StatelessWidget {
   final ScrollController controller = ScrollController();

@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class LocalStore {
   static const String _myListKey = 'my_list_ids';

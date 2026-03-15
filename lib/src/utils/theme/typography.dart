@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class TextTheme {
   static const TextStyle heading1 = TextStyle(

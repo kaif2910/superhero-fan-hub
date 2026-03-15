@@ -14,7 +14,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Netflix"
+        android:label="Marvel Cinema"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

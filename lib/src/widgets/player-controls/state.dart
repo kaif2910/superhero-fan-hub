@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class PlayerControlState extends State<PlayerControl> {
   VideoPlayerController get controller => widget.controller;

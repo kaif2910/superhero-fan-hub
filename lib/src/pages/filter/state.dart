@@ -1,4 +1,4 @@
-part of netflix;
+part of marvel_cinema;
 
 class FilterState extends State<Filter> {
   late String filterSelected;
